@@ -1,0 +1,11 @@
+# PHPStorm IDE
+.idea
+
+# K-developer IDE
+.kdev4
+repo.kdev4
+
+**/.directory
+
+# backups
+backups
