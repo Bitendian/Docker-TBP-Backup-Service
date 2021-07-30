@@ -29,9 +29,7 @@ version: "3.4"
 services:
 (...)
   my-project-backups:
-    build:
-      context: ./backup-service
-      target: development
+    image: bitendian/tbp-backup-service:latest
     container_name: 'my-project-backups'
     labels:
       - traefik.enable=false
