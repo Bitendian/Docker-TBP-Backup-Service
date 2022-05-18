@@ -6,7 +6,7 @@ for EXPECTED_VAR in ${EXPECTED_VARS} ; do
   if [ -z "${!EXPECTED_VAR}" ]
   then
     echo "ERROR: environment variable ${EXPECTED_VAR} must be defined";
-    exit -1;
+    exit 1;
   fi
 done
 
