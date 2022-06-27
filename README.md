@@ -6,22 +6,22 @@ Backups will be placed into local folder, specified at file ```docker-compose.ym
 
 ### Create
 ```
-$ docker-compose run komtes-backups /root/bin/create.sh
+$ docker-compose run my-project-backups /root/bin/create.sh
 ```
 
 ### Restore
 ```
-$ docker-compose run komtes-backups /root/bin/restore.sh "<backup_folder>"
+$ docker-compose run my-project-backups /root/bin/restore.sh "<backup_folder>"
 ```
 
 ## Environment variables
-| Name | Usage | Example |
-| ------ | ------ | ------ |
-| MYSQL_HOST | IP address / container name for MySQL/MariaDB service | ```my-container-mysql-server``` |
-| MYSQL_USER | MySQL/MariaDB user | ```mysql-user``` |
-| MYSQL_PASSWORD | MySQL/MariaDB password | ```mysql-pass``` |
-| MYSQL_DATABASE | MySQL/MariaDB database name | ```my-database-name``` |
-| TARGET_FOLDERS | List of folders to back-up, separated by spaces | ```uploads locale user-images``` |
+| Name           | Usage                                                 | Example                          |
+|----------------|-------------------------------------------------------|----------------------------------|
+| MYSQL_HOST     | IP address / container name for MySQL/MariaDB service | ```my-container-mysql-server```  |
+| MYSQL_USER     | MySQL/MariaDB user                                    | ```mysql-user```                 |
+| MYSQL_PASSWORD | MySQL/MariaDB password                                | ```mysql-pass```                 |
+| MYSQL_DATABASE | MySQL/MariaDB database name                           | ```my-database-name```           |
+| TARGET_FOLDERS | List of folders to back-up, separated by spaces       | ```uploads locale user-images``` |
 
 ### Example
 ```
