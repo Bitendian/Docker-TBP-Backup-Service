@@ -16,7 +16,7 @@ release:
   image: bitendian/cdci-docker-builder
   script:
     - echo $REGISTRY_PASSWORD | docker login -u $REGISTRY_USER --password-stdin
-    - docker build --no-cache .
+    - docker build --no-cache -t bitendian/tbp-backup-service:$CI_COMMIT_TAG -t bitendian/tbp-backup-service:latest .
     - docker push bitendian/tbp-backup-service:$CI_COMMIT_TAG
     - docker push bitendian/tbp-backup-service:latest
   only:
