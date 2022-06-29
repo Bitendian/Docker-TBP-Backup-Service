@@ -2,18 +2,17 @@
 
 # Check environment variables
 EXPECTED_VARS=('MYSQL_HOST' 'MYSQL_USER' 'MYSQL_PASSWORD' 'MYSQL_DATABASE');
-for EXPECTED_VAR in ${EXPECTED_VARS} ; do
+for EXPECTED_VAR in "${EXPECTED_VARS[@]}" ; do
   if [ -z "${!EXPECTED_VAR}" ]
   then
     echo "ERROR: environment variable ${EXPECTED_VAR} must be defined";
-    exit -1;
+    exit 1;
   fi
 done
 
-PRE_BACKUP_SCRIPT="pre-backup.sh"
-if [ -f "$PRE_BACKUP_SCRIPT" ]; then
+if [ -f "pre-backup.sh" ]; then
   echo "Pre backup script found: executing..."
-  source $PRE_BACKUP_SCRIPT
+  source pre-backup.sh
 fi
 
 # Setup local variables
