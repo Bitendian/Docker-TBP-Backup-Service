@@ -2,7 +2,7 @@
 
 # Check environment variables
 EXPECTED_VARS=('MYSQL_HOST' 'MYSQL_USER' 'MYSQL_PASSWORD' 'MYSQL_DATABASE');
-for EXPECTED_VAR in ${EXPECTED_VARS} ; do
+for EXPECTED_VAR in "${EXPECTED_VARS[@]}" ; do
   if [ -z "${!EXPECTED_VAR}" ]
   then
     echo "ERROR: environment variable ${EXPECTED_VAR} must be defined";
@@ -10,15 +10,22 @@ for EXPECTED_VAR in ${EXPECTED_VARS} ; do
   fi
 done
 
+if [ -f "pre-backup.sh" ]; then
+  echo "Pre backup script found: executing..."
+  source pre-backup.sh
+fi
+
 # Setup local variables
 BACKUP_NAME=$(date +"%FT%T")
 BACKUP_PATH=/mnt/backups/${BACKUP_NAME}
 
 # Create backup
+echo "Creating BD backup..."
 mkdir -p ${BACKUP_PATH} && \
 mysqldump -h${MYSQL_HOST} -u${MYSQL_USER} -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} > ${BACKUP_PATH}/snapshot.sql;
 
 for FOLDER in ${TARGET_FOLDERS} ; do
+  echo "Creating ${FOLDER} folder backup..."
   tar -C /mnt -j -c -f ${BACKUP_PATH}/${FOLDER}.tar.bz2 ${FOLDER};
 done
 

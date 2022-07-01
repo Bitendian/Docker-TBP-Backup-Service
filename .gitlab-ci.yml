@@ -1,0 +1,23 @@
+services:
+  - name: docker:dind
+
+stages:
+  - release
+
+variables:
+  REGISTRY_USER: mclausell
+  # REGISTRY_PASSWORD <- exported from gitlab environment variables
+  DOCKER_COMPOSE_RELEASE: docker-compose-release.yml
+  # See https://github.com/docker-library/docker/pull/166
+  DOCKER_TLS_CERTDIR: ""
+
+release:
+  stage: release
+  image: bitendian/cdci-docker-builder
+  script:
+    - echo $REGISTRY_PASSWORD | docker login -u $REGISTRY_USER --password-stdin
+    - docker build --no-cache -t bitendian/tbp-backup-service:$CI_COMMIT_TAG -t bitendian/tbp-backup-service:latest .
+    - docker push bitendian/tbp-backup-service:$CI_COMMIT_TAG
+    - docker push bitendian/tbp-backup-service:latest
+  only:
+    - tags
