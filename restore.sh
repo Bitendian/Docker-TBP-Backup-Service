@@ -47,7 +47,7 @@ DIFF_RESULT=$?
 rm -f ${CHECKSUM_FILE}
 if [ ${DIFF_RESULT} -ne 0 ]; then
   echo "ERROR: invalid checksum at '${BACKUP_NAME}'. Corrupted backup files?";
-  exit -1;
+  exit 1;
 fi
 
 # Restore volumes in files array
@@ -65,4 +65,3 @@ mysql -h${MYSQL_HOST} -u ${MYSQL_USER} -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} < $
 echo "Backup restored from '${BACKUP_NAME}'"
 
 exit 0;
-
