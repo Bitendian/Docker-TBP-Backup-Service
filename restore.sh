@@ -50,16 +50,19 @@ if [ ${DIFF_RESULT} -ne 0 ]; then
   exit -1;
 fi
 
-# Restore database
-mysql -h${MYSQL_HOST} -u ${MYSQL_USER} -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} < ${BACKUP_PATH}/snapshot.sql;
 # Restore volumes in files array
+echo "Unpacking volumes..."
 for i in "${files[@]}"
 do
+  echo "$i"
 	tar -C /mnt -j -x -f ${BACKUP_PATH}/$i
 done
+
+# Restore database
+echo "Restoring database snapshot..."
+mysql -h${MYSQL_HOST} -u ${MYSQL_USER} -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} < ${BACKUP_PATH}/snapshot.sql;
 
 echo "Backup restored from '${BACKUP_NAME}'"
 
 exit 0;
-
 
